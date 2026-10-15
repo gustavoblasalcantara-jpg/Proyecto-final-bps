@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPS — Inscripción a programa social y cotizador de giro</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/registro.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="marca" href="index.html" aria-label="Banco Perú Solidario, ir al inicio">
+      <span class="logo-moneda" aria-hidden="true">
+        <svg class="icono-moneda" viewBox="0 0 48 48">
+          <circle class="moneda-borde" cx="24" cy="24" r="22"></circle>
+          <circle class="moneda-cara" cx="24" cy="24" r="17"></circle>
+          <text class="moneda-simbolo" x="24" y="30.5" text-anchor="middle">S/</text>
+        </svg>
+      </span>
+      <span class="marca-texto">
+        <span class="marca-nombre">Banco Perú Solidario</span>
+        <span class="marca-lema">Banca en línea</span>
+      </span>
+    </a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="registro.html" class="activo" aria-current="page">Nueva inscripción</a></li>
+        <li><a href="consulta.html">Mis registros</a></li>
+        <li><a href="pago.html">Pagar</a></li>
+        <li><span id="usuario-chip" class="usuario-chip" hidden></span></li>
+        <li><button type="button" id="btn-logout" class="boton-logout">Cerrar sesión</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="cabecera-pagina">
+    <div class="cabecera-pagina-contenido">
+      <p class="seccion-etiqueta">RF-5.4 · RF-5.09</p>
+      <h1>Inscripción a programa social</h1>
+      <p>Registra tu inscripción y, si vas a enviar un giro nacional, calcula al instante la comisión que pagarás.</p>
+    </div>
+  </div>
+
+  <main class="contenedor-principal registro-grid">
+
+    <section class="tarjeta-formulario" aria-labelledby="form-titulo">
+      <h2 id="form-titulo" class="titulo-tarjeta">Datos de la inscripción</h2>
+      <form id="form-registro" class="formulario" novalidate>
+        <div class="campo">
+          <label for="reg-nombre">Nombre del beneficiario</label>
+          <input type="text" id="reg-nombre" name="beneficiario" placeholder="Nombres y apellidos completos" required minlength="3" maxlength="120" autocomplete="name">
+        </div>
+
+        <div class="campo-doble">
+          <div class="campo">
+            <label for="reg-dni">DNI</label>
+            <input type="text" id="reg-dni" name="dni" placeholder="8 dígitos" required pattern="[0-9]{8}" maxlength="8" inputmode="numeric">
+          </div>
+          <div class="campo">
+            <label for="reg-programa">Programa social</label>
+            <select id="reg-programa" name="programa" required>
+              <option value="">— Seleccione —</option>
+              <option value="Apoyo Directo al Hogar">Apoyo Directo al Hogar</option>
+              <option value="Bono Vejez Digna">Bono Vejez Digna</option>
+              <option value="Sueldo Joven Rural">Sueldo Joven Rural</option>
+              <option value="Cuna y Nutrición">Cuna y Nutrición</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="reg-giro">Monto del giro nacional (S/)</label>
+          <input type="number" id="reg-giro" name="monto_giro" min="0" max="50000" step="0.01" value="0" required aria-describedby="ayuda-giro">
+          <p id="ayuda-giro" class="campo-ayuda">Comisión: 1.5 % del giro, con un mínimo de S/ 5.00. Si no envías giro, deja 0 y tu inscripción queda exonerada.</p>
+          <div class="atajos-giro" role="group" aria-label="Montos frecuentes">
+            <button type="button" class="chip-monto" data-monto="200">S/ 200</button>
+            <button type="button" class="chip-monto" data-monto="500">S/ 500</button>
+            <button type="button" class="chip-monto" data-monto="1000">S/ 1 000</button>
+            <button type="button" class="chip-monto" data-monto="2500">S/ 2 500</button>
+          </div>
+        </div>
+
+        <p class="cotizador">
+          Comisión estimada:
+          <output id="monto-estimado" for="reg-giro" aria-live="polite">S/ 0.00</output>
+        </p>
+        <p id="detalle-calculo" class="campo-ayuda"></p>
+
+        <p id="error-registro" class="error" aria-live="polite"></p>
+        <button type="submit" class="boton boton-primario">Enviar inscripción</button>
+      </form>
+
+      <div id="resultado-registro" class="zona-confirmacion" hidden></div>
+      <div id="acciones-post" class="acciones-formulario acciones-post" hidden>
+        <a id="enlace-pagar" class="boton boton-oro" href="pago.html">Pagar comisión ahora</a>
+        <a class="boton boton-secundario" href="consulta.html">Ver mis registros</a>
+      </div>
+    </section>
+
+    <!-- Vista previa 3D del comprobante del giro -->
+    <aside class="vista-previa" aria-label="Vista previa del giro">
+      <div class="boleta-3d" id="boleta-3d">
+        <div class="boleta">
+          <div class="boleta-cabecera">
+            <span class="boleta-moneda" aria-hidden="true">S/</span>
+            <span>
+              <strong>Giro nacional BPS</strong>
+              <small>Vista previa en vivo</small>
+            </span>
+          </div>
+          <dl class="boleta-datos">
+            <div><dt>Beneficiario</dt><dd id="pv-nombre">—</dd></div>
+            <div><dt>Programa</dt><dd id="pv-programa">—</dd></div>
+            <div><dt>Monto del giro</dt><dd id="pv-giro">S/ 0.00</dd></div>
+            <div><dt>Comisión</dt><dd id="pv-comision">S/ 0.00</dd></div>
+            <div class="boleta-total"><dt>Total a desembolsar</dt><dd id="pv-total">S/ 0.00</dd></div>
+          </dl>
+          <p class="boleta-pie">El pago de la comisión habilita la emisión del giro.</p>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <p class="pie-simple">Banco Perú Solidario es una entidad ficticia creada con fines académicos.</p>
+
+  <script type="module" src="js/registro/registro.js"></script>
+</body>
+</html>

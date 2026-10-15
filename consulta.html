@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPS — Mis registros</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/consulta.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="marca" href="index.html" aria-label="Banco Perú Solidario, ir al inicio">
+      <span class="logo-moneda" aria-hidden="true">
+        <svg class="icono-moneda" viewBox="0 0 48 48">
+          <circle class="moneda-borde" cx="24" cy="24" r="22"></circle>
+          <circle class="moneda-cara" cx="24" cy="24" r="17"></circle>
+          <text class="moneda-simbolo" x="24" y="30.5" text-anchor="middle">S/</text>
+        </svg>
+      </span>
+      <span class="marca-texto">
+        <span class="marca-nombre">Banco Perú Solidario</span>
+        <span class="marca-lema">Banca en línea</span>
+      </span>
+    </a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="registro.html">Nueva inscripción</a></li>
+        <li><a href="consulta.html" class="activo" aria-current="page">Mis registros</a></li>
+        <li><a href="pago.html">Pagar</a></li>
+        <li><span id="usuario-chip" class="usuario-chip" hidden></span></li>
+        <li><button type="button" id="btn-logout" class="boton-logout">Cerrar sesión</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="cabecera-pagina">
+    <div class="cabecera-pagina-contenido">
+      <p class="seccion-etiqueta">RF-5.5 · Consulta de registros propios</p>
+      <h1>Mis inscripciones a programas sociales</h1>
+      <p>Solo ves los trámites registrados con tu cuenta. Paga la comisión pendiente o descarga tu comprobante.</p>
+    </div>
+  </div>
+
+  <main class="contenedor-principal">
+    <section class="resumen" aria-label="Resumen de mis registros">
+      <article class="resumen-tarjeta">
+        <h2>Total de inscripciones</h2>
+        <p id="res-total">—</p>
+      </article>
+      <article class="resumen-tarjeta resumen-tarjeta--pendiente">
+        <h2>Comisiones pendientes</h2>
+        <p id="res-pendiente">—</p>
+      </article>
+      <article class="resumen-tarjeta resumen-tarjeta--pagado">
+        <h2>Pagadas</h2>
+        <p id="res-pagado">—</p>
+      </article>
+    </section>
+
+    <div class="tabla-contenedor tabla-animada">
+      <table class="tabla">
+        <caption>Mis trámites registrados</caption>
+        <thead>
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Beneficiario</th>
+            <th scope="col">DNI</th>
+            <th scope="col">Programa</th>
+            <th scope="col">Giro</th>
+            <th scope="col">Comisión</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Pago</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-cuerpo-consulta">
+          <tr><td colspan="9" class="celda-vacia">Cargando registros…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <p class="pie-simple">Banco Perú Solidario es una entidad ficticia creada con fines académicos.</p>
+
+  <script type="module" src="js/consulta/consulta.js"></script>
+</body>
+</html>

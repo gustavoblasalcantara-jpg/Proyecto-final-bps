@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPS — Módulo de caja</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/caja.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="marca" href="index.html" aria-label="Banco Perú Solidario, ir al inicio">
+      <span class="logo-moneda" aria-hidden="true">
+        <svg class="icono-moneda" viewBox="0 0 48 48">
+          <circle class="moneda-borde" cx="24" cy="24" r="22"></circle>
+          <circle class="moneda-cara" cx="24" cy="24" r="17"></circle>
+          <text class="moneda-simbolo" x="24" y="30.5" text-anchor="middle">S/</text>
+        </svg>
+      </span>
+      <span class="marca-texto">
+        <span class="marca-nombre">Banco Perú Solidario</span>
+        <span class="marca-lema">Caja — <span id="nombre-cajero">…</span></span>
+      </span>
+    </a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="caja.html" class="activo" aria-current="page">Caja</a></li>
+        <li><a href="panel.html" data-solo-rol="administrador">Panel</a></li>
+        <li><span id="usuario-chip" class="usuario-chip" hidden></span></li>
+        <li><button type="button" id="btn-logout" class="boton-logout">Cerrar sesión</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="cabecera-pagina">
+    <div class="cabecera-pagina-contenido">
+      <p class="seccion-etiqueta">RF-5.12 · RF-5.13</p>
+      <h1>Módulo de caja</h1>
+      <p>Cobra en ventanilla la comisión de giro, verifica los pagos recibidos en línea y cuadra la caja del día.</p>
+    </div>
+  </div>
+
+  <main class="contenedor-principal caja-principal">
+
+    <!-- 1. Cobro presencial -->
+    <section class="bloque-caja" aria-labelledby="t-cobro">
+      <div class="bloque-cabecera">
+        <h2 id="t-cobro">Cobro presencial</h2>
+        <form id="form-buscar" role="search" class="form-buscar">
+          <label for="criterio">Código de seguimiento, DNI o nombre</label>
+          <div class="buscar-fila">
+            <input id="criterio" name="criterio" type="search" autocomplete="off" placeholder="Ej.: 70000001 o BPS-">
+            <button type="submit" class="boton boton-primario">Buscar</button>
+          </div>
+        </form>
+      </div>
+      <div class="tabla-contenedor tabla-animada">
+        <table id="tabla-pendientes" class="tabla">
+          <caption>Inscripciones con comisión pendiente de pago</caption>
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Cliente / beneficiario</th>
+              <th scope="col">DNI</th>
+              <th scope="col">Giro</th>
+              <th scope="col">Comisión</th>
+              <th scope="col">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6" class="celda-vacia">Cargando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="confirmacion-cobro" class="zona-confirmacion" hidden></div>
+    </section>
+
+    <!-- 2. Pagos en línea (conciliación) -->
+    <section class="bloque-caja" aria-labelledby="t-linea">
+      <div class="bloque-cabecera">
+        <h2 id="t-linea">Pagos recibidos por la pasarela</h2>
+        <div class="filtros-linea">
+          <label class="filtro">
+            <span>Fecha</span>
+            <input id="fecha-caja" type="date">
+          </label>
+          <label class="filtro-check">
+            <input id="solo-por-verificar" type="checkbox"> Solo pendientes de verificar
+          </label>
+          <span class="indicador-vivo" title="Se actualiza cada 15 segundos">En vivo · 15 s</span>
+        </div>
+      </div>
+      <p id="aviso-nuevos" class="aviso-nuevos" role="status" aria-live="polite"></p>
+      <div class="tabla-contenedor tabla-animada">
+        <table id="tabla-en-linea" class="tabla">
+          <caption>Operaciones en línea</caption>
+          <thead>
+            <tr>
+              <th scope="col">Hora</th>
+              <th scope="col">Operación</th>
+              <th scope="col">Solicitud</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Medio</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Resultado</th>
+              <th scope="col">Verificación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="8" class="celda-vacia">Cargando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. Resumen del día -->
+    <section class="bloque-caja" aria-labelledby="t-resumen">
+      <h2 id="t-resumen">Resumen del día (cierre de caja)</h2>
+      <div class="resumen-dia">
+        <div class="tabla-contenedor tabla-animada">
+          <table id="tabla-resumen" class="tabla">
+            <caption class="sr-only">Totales por canal y medio de pago</caption>
+            <thead>
+              <tr>
+                <th scope="col">Canal</th>
+                <th scope="col">Medio</th>
+                <th scope="col">Operaciones</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="total-dia-tarjeta">
+          <p>Total recaudado</p>
+          <strong id="total-dia">S/ 0.00</strong>
+          <span class="moneda-giratoria" aria-hidden="true">S/</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Ventana de cobro con <dialog> + showModal() -->
+  <dialog id="dialogo-cobro" aria-labelledby="t-dialogo">
+    <form id="form-cobro" class="formulario">
+      <h2 id="t-dialogo">Registrar cobro</h2>
+      <p class="cobro-resumen">Solicitud <strong id="cobro-codigo"></strong> — Total <strong id="cobro-total"></strong></p>
+      <div class="campo">
+        <label for="metodo-caja">Medio de pago</label>
+        <select id="metodo-caja" name="metodo">
+          <option value="efectivo">Efectivo</option>
+          <option value="pos">Tarjeta en POS</option>
+          <option value="andipay">Billetera AndiPay (QR)</option>
+          <option value="pagomovil">Billetera PagoMóvil (QR)</option>
+        </select>
+      </div>
+      <div id="campo-recibido" class="campo">
+        <label for="monto-recibido">Monto recibido (S/)</label>
+        <input id="monto-recibido" name="monto_recibido" type="number" min="0" step="0.01">
+        <p class="vuelto">Vuelto: <output id="vuelto" for="monto-recibido">S/ 0.00</output></p>
+      </div>
+      <div id="campo-referencia" class="campo" hidden>
+        <label for="referencia">N.° de voucher u operación (6 a 12 dígitos)</label>
+        <input id="referencia" name="referencia" inputmode="numeric" maxlength="12">
+      </div>
+      <p id="error-cobro" class="error" aria-live="polite"></p>
+      <div class="dialogo-acciones">
+        <button type="button" id="cancelar-cobro" class="boton boton-secundario">Cancelar</button>
+        <button type="submit" class="boton boton-exito">Confirmar cobro</button>
+      </div>
+    </form>
+  </dialog>
+
+  <p class="pie-simple">Banco Perú Solidario es una entidad ficticia creada con fines académicos.</p>
+
+  <script type="module" src="js/caja/caja.js"></script>
+</body>
+</html>

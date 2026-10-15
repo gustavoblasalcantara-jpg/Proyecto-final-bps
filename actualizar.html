@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPS — Editar inscripción</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/actualizar.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="marca" href="index.html" aria-label="Banco Perú Solidario, ir al inicio">
+      <span class="logo-moneda" aria-hidden="true">
+        <svg class="icono-moneda" viewBox="0 0 48 48">
+          <circle class="moneda-borde" cx="24" cy="24" r="22"></circle>
+          <circle class="moneda-cara" cx="24" cy="24" r="17"></circle>
+          <text class="moneda-simbolo" x="24" y="30.5" text-anchor="middle">S/</text>
+        </svg>
+      </span>
+      <span class="marca-texto">
+        <span class="marca-nombre">Banco Perú Solidario</span>
+        <span class="marca-lema">Banca en línea</span>
+      </span>
+    </a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="registro.html">Nueva inscripción</a></li>
+        <li><a href="consulta.html">Mis registros</a></li>
+        <li><a href="pago.html">Pagar</a></li>
+        <li><span id="usuario-chip" class="usuario-chip" hidden></span></li>
+        <li><button type="button" id="btn-logout" class="boton-logout">Cerrar sesión</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="cabecera-pagina">
+    <div class="cabecera-pagina-contenido">
+      <p class="seccion-etiqueta">RF-5.6 · Actualización de registro propio</p>
+      <h1>Editar inscripción <span id="titulo-codigo" class="codigo-claro"></span></h1>
+      <p>Puedes corregir tus datos mientras la comisión siga <strong>pendiente</strong> de pago. Si cambias el giro, la comisión se recalcula.</p>
+    </div>
+  </div>
+
+  <main class="contenedor-principal contenedor-estrecho">
+    <section class="tarjeta-formulario" aria-label="Formulario de edición">
+      <div id="mensaje-estado" class="estado-registro" aria-live="polite"></div>
+
+      <form id="form-actualizar" class="formulario" novalidate>
+        <input type="hidden" id="act-id" name="id">
+
+        <div class="campo">
+          <label for="act-nombre">Nombre del beneficiario</label>
+          <input type="text" id="act-nombre" name="beneficiario" required minlength="3" maxlength="120">
+        </div>
+
+        <div class="campo-doble">
+          <div class="campo">
+            <label for="act-dni">DNI</label>
+            <input type="text" id="act-dni" name="dni" required pattern="[0-9]{8}" maxlength="8" inputmode="numeric">
+          </div>
+          <div class="campo">
+            <label for="act-programa">Programa social</label>
+            <select id="act-programa" name="programa" required>
+              <option value="Apoyo Directo al Hogar">Apoyo Directo al Hogar</option>
+              <option value="Bono Vejez Digna">Bono Vejez Digna</option>
+              <option value="Sueldo Joven Rural">Sueldo Joven Rural</option>
+              <option value="Cuna y Nutrición">Cuna y Nutrición</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="act-giro">Monto del giro nacional (S/)</label>
+          <input type="number" id="act-giro" name="monto_giro" min="0" max="50000" step="0.01" required>
+        </div>
+
+        <p class="cotizador">
+          Nueva comisión:
+          <output id="monto-estimado" for="act-giro" aria-live="polite">S/ 0.00</output>
+        </p>
+
+        <p id="error-actualizar" class="error" aria-live="polite"></p>
+        <div class="acciones-formulario">
+          <button type="submit" id="btn-guardar" class="boton boton-primario">Guardar cambios</button>
+          <a href="consulta.html" class="boton boton-secundario">Cancelar</a>
+        </div>
+      </form>
+      <div id="resultado-actualizar" class="zona-confirmacion" hidden></div>
+    </section>
+  </main>
+
+  <p class="pie-simple">Banco Perú Solidario es una entidad ficticia creada con fines académicos.</p>
+
+  <script type="module" src="js/actualizar/actualizar.js"></script>
+</body>
+</html>

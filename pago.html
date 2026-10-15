@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPS — Pago en línea de la comisión de giro</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/pago.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="marca" href="index.html" aria-label="Banco Perú Solidario, ir al inicio">
+      <span class="logo-moneda" aria-hidden="true">
+        <svg class="icono-moneda" viewBox="0 0 48 48">
+          <circle class="moneda-borde" cx="24" cy="24" r="22"></circle>
+          <circle class="moneda-cara" cx="24" cy="24" r="17"></circle>
+          <text class="moneda-simbolo" x="24" y="30.5" text-anchor="middle">S/</text>
+        </svg>
+      </span>
+      <span class="marca-texto">
+        <span class="marca-nombre">Banco Perú Solidario</span>
+        <span class="marca-lema">Pasarela de pagos</span>
+      </span>
+    </a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="registro.html">Nueva inscripción</a></li>
+        <li><a href="consulta.html">Mis registros</a></li>
+        <li><a href="pago.html" class="activo" aria-current="page">Pagar</a></li>
+        <li><span id="usuario-chip" class="usuario-chip" hidden></span></li>
+        <li><button type="button" id="btn-logout" class="boton-logout">Cerrar sesión</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="cabecera-pagina">
+    <div class="cabecera-pagina-contenido">
+      <p class="seccion-etiqueta">RF-5.10 · RF-5.11 · Pago en línea</p>
+      <h1>Paga la comisión de tu giro</h1>
+      <p>Con tarjeta de débito, crédito o billetera electrónica. El monto siempre se lee del sistema, nunca del formulario.</p>
+    </div>
+  </div>
+
+  <main class="contenedor-principal pago-grid">
+
+    <!-- Columna izquierda: resumen + tarjeta 3D -->
+    <div class="pago-lateral">
+      <section class="tarjeta resumen-pago" aria-labelledby="t-resumen">
+        <h2 id="t-resumen">Resumen</h2>
+        <div class="campo">
+          <label for="registro">Inscripción a pagar</label>
+          <select id="registro" name="registro"></select>
+        </div>
+        <p class="total-pagar">Total a pagar <strong id="resumen-monto">—</strong></p>
+        <p id="resumen-detalle" class="campo-ayuda"></p>
+      </section>
+
+      <!-- Tarjeta 3D en vivo: gira para mostrar el CVV -->
+      <div class="escena-tarjeta" id="escena-tarjeta" aria-hidden="true">
+        <div class="tarjeta-viva" id="tarjeta-viva" data-marca="">
+          <div class="tv-cara tv-frente">
+            <div class="tv-fila">
+              <span class="tv-chip"></span>
+              <span class="tv-marca" id="tv-marca">BPS</span>
+            </div>
+            <p class="tv-numero" id="tv-numero">•••• •••• •••• ••••</p>
+            <div class="tv-fila">
+              <span class="tv-dato"><small>Titular</small><span id="tv-titular">NOMBRE APELLIDO</span></span>
+              <span class="tv-dato"><small>Vence</small><span id="tv-venc">MM/AA</span></span>
+            </div>
+          </div>
+          <div class="tv-cara tv-reverso">
+            <span class="tv-banda"></span>
+            <span class="tv-cvv"><small>CVV</small><span id="tv-cvv">•••</span></span>
+            <p class="tv-legal">Tarjeta de prueba · Simulación académica</p>
+          </div>
+        </div>
+      </div>
+
+      <details class="tarjeta datos-prueba">
+        <summary>Datos de prueba (escenarios de la guía)</summary>
+        <ul>
+          <li><strong>Aprobado débito:</strong> 4111 1111 1111 1111 · 12/29 · 123</li>
+          <li><strong>Saldo insuficiente:</strong> 4000 0000 0000 0002 · 08/28 · 456</li>
+          <li><strong>Aprobado crédito:</strong> 5555 5555 5555 4444 · 05/30 · 789</li>
+          <li><strong>Bloqueada:</strong> 5105 1051 0510 5100 · 03/27 · 321</li>
+          <li><strong>Amex (CVV 4):</strong> 3782 8224 6310 005 · 11/28 · 1234</li>
+          <li><strong>Vencida:</strong> 4242 4242 4242 4242 · 01/25</li>
+          <li><strong>Billetera AndiPay:</strong> 987654321 · código 123456</li>
+          <li><strong>PagoMóvil sin saldo:</strong> 912345678 · código 654321</li>
+        </ul>
+      </details>
+    </div>
+
+    <!-- Columna derecha: método y formularios -->
+    <section class="tarjeta-formulario pago-formularios" aria-labelledby="t-metodo">
+      <fieldset class="selector-metodo">
+        <legend id="t-metodo">Método de pago</legend>
+        <label class="opcion-metodo">
+          <input type="radio" name="metodo" value="tarjeta" checked>
+          <span>Tarjeta de débito o crédito</span>
+        </label>
+        <label class="opcion-metodo">
+          <input type="radio" name="metodo" value="billetera">
+          <span>Billetera electrónica</span>
+        </label>
+      </fieldset>
+
+      <form id="form-tarjeta" class="formulario" novalidate>
+        <div class="campo">
+          <label for="numero">Número de tarjeta</label>
+          <input id="numero" name="numero" inputmode="numeric" autocomplete="cc-number" maxlength="23"
+                 placeholder="0000 0000 0000 0000" required aria-describedby="marca-detectada error-numero">
+          <span id="marca-detectada" class="marca-detectada"></span>
+          <span id="error-numero" class="error"></span>
+        </div>
+        <div class="campo-doble">
+          <div class="campo">
+            <label for="vencimiento">Vencimiento (MM/AA)</label>
+            <input id="vencimiento" name="vencimiento" inputmode="numeric" autocomplete="cc-exp" maxlength="5"
+                   placeholder="MM/AA" required aria-describedby="error-vencimiento">
+            <span id="error-vencimiento" class="error"></span>
+          </div>
+          <div class="campo">
+            <label for="cvv">CVV</label>
+            <input id="cvv" name="cvv" type="password" inputmode="numeric" autocomplete="cc-csc" maxlength="4"
+                   required aria-describedby="error-cvv">
+            <span id="error-cvv" class="error"></span>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="titular">Nombre del titular</label>
+          <input id="titular" name="titular" autocomplete="cc-name" required aria-describedby="error-titular"
+                 placeholder="Como figura en la tarjeta">
+          <span id="error-titular" class="error"></span>
+        </div>
+        <button type="submit" class="boton boton-primario boton-pagar">Pagar con tarjeta</button>
+      </form>
+
+      <form id="form-billetera" class="formulario" novalidate hidden>
+        <div class="campo">
+          <label for="proveedor">Billetera</label>
+          <select id="proveedor" name="proveedor">
+            <option value="andipay">AndiPay</option>
+            <option value="pagomovil">PagoMóvil</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="celular">Celular afiliado</label>
+          <input id="celular" name="celular" inputmode="numeric" autocomplete="tel-national" maxlength="9"
+                 placeholder="9XXXXXXXX" required aria-describedby="error-celular">
+          <span id="error-celular" class="error"></span>
+        </div>
+        <div class="campo">
+          <label for="codigo">Código de aprobación (6 dígitos que muestra tu billetera)</label>
+          <input id="codigo" name="codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="6"
+                 required aria-describedby="error-codigo">
+          <span id="error-codigo" class="error"></span>
+        </div>
+        <button type="submit" class="boton boton-primario boton-pagar">Pagar con billetera</button>
+      </form>
+
+      <p id="mensaje-pago" class="mensaje" role="status" aria-live="polite"></p>
+      <div id="confirmacion-pago" class="zona-confirmacion" hidden></div>
+      <p class="aviso-seguridad">
+        Simulación académica: en un sistema real el formulario de tarjeta lo provee una pasarela
+        certificada PCI DSS y el CVV jamás se almacena.
+      </p>
+    </section>
+  </main>
+
+  <p class="pie-simple">Banco Perú Solidario es una entidad ficticia creada con fines académicos.</p>
+
+  <script type="module" src="js/pago/pago.js"></script>
+</body>
+</html>

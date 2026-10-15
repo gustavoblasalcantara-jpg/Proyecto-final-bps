@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco Perú Solidario — Pago de sueldos y programas sociales</title>
+  <meta name="description" content="Banco Perú Solidario: banca estatal a cargo del pago de sueldos públicos y el desembolso de programas sociales a nivel nacional.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<!-- Íconos institucionales en SVG (sprite reutilizable) -->
+<svg class="sprite-iconos" aria-hidden="true">
+  <symbol id="icono-sueldo" viewBox="0 0 24 24">
+    <rect x="2" y="6" width="20" height="12" rx="1.5"></rect>
+    <circle cx="12" cy="12" r="3"></circle>
+    <line x1="5" y1="9" x2="5.01" y2="9"></line>
+    <line x1="19" y1="15" x2="19.01" y2="15"></line>
+  </symbol>
+  <symbol id="icono-programa" viewBox="0 0 24 24">
+    <path d="M12 20 C6 15.5 3 12.4 3 8.9 C3 6.2 5.1 4 7.7 4 C9.4 4 10.9 4.9 12 6.3 C13.1 4.9 14.6 4 16.3 4 C18.9 4 21 6.2 21 8.9 C21 12.4 18 15.5 12 20 Z"></path>
+  </symbol>
+  <symbol id="icono-cita" viewBox="0 0 24 24">
+    <rect x="3" y="5" width="18" height="16" rx="1.5"></rect>
+    <line x1="3" y1="10" x2="21" y2="10"></line>
+    <line x1="7" y1="2.5" x2="7" y2="7"></line>
+    <line x1="17" y1="2.5" x2="17" y2="7"></line>
+    <line x1="7" y1="14" x2="10" y2="14"></line>
+    <line x1="14" y1="14" x2="17" y2="14"></line>
+  </symbol>
+  <symbol id="icono-reclamo" viewBox="0 0 24 24">
+    <path d="M12 3 L21 20 L3 20 Z"></path>
+    <line x1="12" y1="9.5" x2="12" y2="14.5"></line>
+    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+  </symbol>
+  <symbol id="icono-hogar" viewBox="0 0 24 24">
+    <path d="M3 11 L12 3 L21 11"></path>
+    <path d="M5 10 V21 H19 V10"></path>
+    <rect x="10" y="14" width="4" height="7"></rect>
+  </symbol>
+  <symbol id="icono-baston" viewBox="0 0 24 24">
+    <circle cx="12" cy="4.5" r="2"></circle>
+    <path d="M12 7 V14 L9 21"></path>
+    <path d="M12 14 L15 21"></path>
+    <path d="M12 9 L16 11 V21"></path>
+  </symbol>
+  <symbol id="icono-joven" viewBox="0 0 24 24">
+    <path d="M2 9 L12 4 L22 9 L12 14 Z"></path>
+    <path d="M6 11 V16 C6 17.5 9 19 12 19 C15 19 18 17.5 18 16 V11"></path>
+    <line x1="22" y1="9" x2="22" y2="15"></line>
+  </symbol>
+  <symbol id="icono-cuna" viewBox="0 0 24 24">
+    <circle cx="9" cy="7" r="3"></circle>
+    <path d="M3 21 C3 15 15 15 15 21"></path>
+    <circle cx="17.5" cy="11.5" r="2"></circle>
+    <path d="M14 21 C14 17.5 21 17.5 21 21"></path>
+  </symbol>
+  <symbol id="billete" viewBox="0 0 160 80">
+    <rect x="1" y="1" width="158" height="78" rx="8" fill="#1e8a5a" stroke="#0f5a39" stroke-width="2"></rect>
+    <rect x="8" y="8" width="144" height="64" rx="5" fill="none" stroke="#bde5c8" stroke-width="1.5" stroke-dasharray="4 3"></rect>
+    <circle cx="48" cy="40" r="20" fill="#bde5c8"></circle>
+    <circle cx="48" cy="35" r="7" fill="#1e8a5a"></circle>
+    <path d="M36 54 C38 44 58 44 60 54 Z" fill="#1e8a5a"></path>
+    <text x="118" y="48" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="700" fill="#ffffff" text-anchor="middle">S/ 100</text>
+    <text x="118" y="64" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#bde5c8" text-anchor="middle" letter-spacing="1">BPS · PERÚ</text>
+  </symbol>
+</svg>
+
+<p class="aviso-bar">
+  Horario de atención en agencias: lunes a viernes 8:00–18:00, sábados 8:00–13:00. Central telefónica 0800-1-1010, las 24 horas.
+</p>
+
+<!-- Encabezado con degradado institucional y moneda SVG animada -->
+<header class="site-header">
+  <a class="marca" href="index.html" aria-label="Banco Perú Solidario, ir al inicio">
+    <span class="logo-moneda" aria-hidden="true">
+      <svg class="icono-moneda" viewBox="0 0 48 48">
+        <circle class="moneda-borde" cx="24" cy="24" r="22"></circle>
+        <circle class="moneda-cara" cx="24" cy="24" r="17"></circle>
+        <text class="moneda-simbolo" x="24" y="30.5" text-anchor="middle">S/</text>
+      </svg>
+    </span>
+    <span class="marca-texto">
+      <span class="marca-nombre">Banco Perú Solidario</span>
+      <span class="marca-lema">Banca del Estado peruano</span>
+    </span>
+  </a>
+  <nav class="nav-principal" aria-label="Navegación principal">
+    <ul>
+      <li><a href="index.html" class="activo" aria-current="page">Inicio</a></li>
+      <li><a href="#programas">Programas</a></li>
+      <li><a href="#fecha-pago">Fecha de pago</a></li>
+      <li><a href="#agencias">Agencias</a></li>
+      <li><a id="enlace-acceso" href="login.html" class="nav-destacado">Iniciar sesión</a></li>
+      <li hidden><span id="usuario-chip" class="usuario-chip"></span></li>
+      <li hidden><button type="button" id="btn-logout" class="boton-logout">Cerrar sesión</button></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO con degradado institucional y escena 3D -->
+  <section class="hero" aria-labelledby="hero-titulo">
+    <div class="hero-texto">
+      <p class="hero-antetitulo">Entidad de banca estatal</p>
+      <h1 id="hero-titulo">Sostenemos el pago del <span class="resaltado">Perú que trabaja</span></h1>
+      <p class="hero-parrafo">
+        Procesamos la planilla de las entidades del Estado y entregamos los programas sociales
+        del Gobierno a través de la red de agencias con mayor alcance del país. Todos los meses,
+        millones de servidores públicos y beneficiarios reciben su pago a través de BPS.
+      </p>
+      <div class="hero-acciones">
+        <a class="boton boton-oro" href="registro.html">Inscribirme a un programa</a>
+        <a class="boton boton-cristal" href="#fecha-pago">Consultar mi fecha de pago</a>
+      </div>
+    </div>
+
+    <!-- Escena 3D decorativa (CSS 3D: perspective + preserve-3d) -->
+    <div class="escena-3d" id="escena-3d" aria-hidden="true">
+      <div class="escena-rotor">
+        <div class="orbita"></div>
+        <div class="tarjeta-3d">
+          <div class="tarjeta-cara tarjeta-frente">
+            <span class="tarjeta-banco">BPS Solidaria</span>
+            <span class="tarjeta-chip"></span>
+            <span class="tarjeta-numero">4111 •••• •••• 2026</span>
+            <span class="tarjeta-titular">BENEFICIARIO BPS</span>
+            <span class="tarjeta-marca">VISA</span>
+          </div>
+          <div class="tarjeta-cara tarjeta-reverso">
+            <span class="tarjeta-banda"></span>
+            <span class="tarjeta-firma">CVV •••</span>
+          </div>
+        </div>
+        <div class="moneda-3d" id="moneda-3d">
+          <span class="moneda-cara-3d moneda-frente">S/</span>
+          <span class="moneda-cara-3d moneda-reverso">BPS</span>
+        </div>
+        <svg class="billete-3d billete-1" viewBox="0 0 160 80"><use href="#billete"></use></svg>
+        <svg class="billete-3d billete-2" viewBox="0 0 160 80"><use href="#billete"></use></svg>
+        <svg class="billete-3d billete-3" viewBox="0 0 160 80"><use href="#billete"></use></svg>
+      </div>
+    </div>
+
+    <dl class="hero-cifras">
+      <div class="hero-cifra">
+        <dt>Agencias a nivel nacional</dt>
+        <dd data-contar="1850">1,850</dd>
+      </div>
+      <div class="hero-cifra">
+        <dt>Servidores públicos con haber pagado por BPS</dt>
+        <dd data-contar="642300">642,300</dd>
+      </div>
+      <div class="hero-cifra">
+        <dt>Millones de soles desembolsados al mes en sueldos</dt>
+        <dd data-contar="4820" data-prefijo="S/ ">S/ 4,820</dd>
+      </div>
+      <div class="hero-cifra">
+        <dt>Beneficiarios de programas sociales atendidos</dt>
+        <dd data-contar="1140000">1,140,000</dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- RF-5.1: Programas sociales con lista de subsidios y requisitos -->
+  <section id="programas" class="programas" aria-labelledby="programas-titulo">
+    <header class="seccion-cabecera" data-revelar>
+      <p class="seccion-etiqueta">RF-5.1 · Programas sociales</p>
+      <h2 id="programas-titulo">¿Cómo cobrar tu subsidio?</h2>
+      <p class="seccion-intro">
+        Estos son los programas sociales que paga BPS. Revisa los requisitos, inscríbete en línea
+        y cobra en ventanilla, cajero o con tu tarjeta BPS Solidaria.
+      </p>
+    </header>
+
+    <ul class="lista-programas">
+      <li class="programa-tarjeta" data-revelar>
+        <span class="programa-icono"><svg aria-hidden="true"><use href="#icono-hogar"></use></svg></span>
+        <h3>Apoyo Directo al Hogar</h3>
+        <p class="programa-monto">S/ 200 <span>bimestral</span></p>
+        <p>Transferencia a hogares en pobreza que cumplen controles de salud y asistencia escolar.</p>
+        <details>
+          <summary>Ver requisitos</summary>
+          <ul class="requisitos">
+            <li>DNI vigente del titular del hogar.</li>
+            <li>Hogar con clasificación socioeconómica de pobreza.</li>
+            <li>Gestantes o menores de 19 años en el hogar.</li>
+          </ul>
+        </details>
+      </li>
+      <li class="programa-tarjeta" data-revelar>
+        <span class="programa-icono"><svg aria-hidden="true"><use href="#icono-baston"></use></svg></span>
+        <h3>Bono Vejez Digna</h3>
+        <p class="programa-monto">S/ 250 <span>bimestral</span></p>
+        <p>Subvención económica para adultos mayores de 65 años que no reciben pensión.</p>
+        <details>
+          <summary>Ver requisitos</summary>
+          <ul class="requisitos">
+            <li>DNI vigente y 65 años cumplidos.</li>
+            <li>Clasificación de pobreza extrema.</li>
+            <li>No percibir pensión de ningún régimen.</li>
+          </ul>
+        </details>
+      </li>
+      <li class="programa-tarjeta" data-revelar>
+        <span class="programa-icono"><svg aria-hidden="true"><use href="#icono-joven"></use></svg></span>
+        <h3>Sueldo Joven Rural</h3>
+        <p class="programa-monto">S/ 400 <span>mensual</span></p>
+        <p>Apoyo a jóvenes de zonas rurales que estudian o se capacitan en un oficio.</p>
+        <details>
+          <summary>Ver requisitos</summary>
+          <ul class="requisitos">
+            <li>DNI vigente, entre 18 y 29 años.</li>
+            <li>Residir en un centro poblado rural.</li>
+            <li>Constancia de estudios o capacitación.</li>
+          </ul>
+        </details>
+      </li>
+      <li class="programa-tarjeta" data-revelar>
+        <span class="programa-icono"><svg aria-hidden="true"><use href="#icono-cuna"></use></svg></span>
+        <h3>Cuna y Nutrición</h3>
+        <p class="programa-monto">S/ 150 <span>mensual</span></p>
+        <p>Apoyo alimentario para gestantes y niñas o niños menores de 3 años.</p>
+        <details>
+          <summary>Ver requisitos</summary>
+          <ul class="requisitos">
+            <li>DNI de la madre y de la niña o niño.</li>
+            <li>Control prenatal o de crecimiento al día.</li>
+            <li>Residir en un distrito focalizado.</li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+
+    <!-- Tabla de programas sociales (aparición animada) -->
+    <div class="tabla-contenedor" data-revelar>
+      <table class="tabla-programas">
+        <caption>Cronograma y canales de cobro de los programas sociales</caption>
+        <thead>
+          <tr>
+            <th scope="col">Programa</th>
+            <th scope="col">Monto</th>
+            <th scope="col">Periodicidad</th>
+            <th scope="col">Público objetivo</th>
+            <th scope="col">Dónde cobrar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Apoyo Directo al Hogar</th>
+            <td>S/ 200.00</td>
+            <td>Bimestral</td>
+            <td>Hogares en pobreza</td>
+            <td>Agencia, cajero, agencia móvil</td>
+          </tr>
+          <tr>
+            <th scope="row">Bono Vejez Digna</th>
+            <td>S/ 250.00</td>
+            <td>Bimestral</td>
+            <td>Adultos de 65 años a más</td>
+            <td>Agencia con atención preferente</td>
+          </tr>
+          <tr>
+            <th scope="row">Sueldo Joven Rural</th>
+            <td>S/ 400.00</td>
+            <td>Mensual</td>
+            <td>Jóvenes rurales de 18 a 29 años</td>
+            <td>Tarjeta BPS Solidaria, billetera</td>
+          </tr>
+          <tr>
+            <th scope="row">Cuna y Nutrición</th>
+            <td>S/ 150.00</td>
+            <td>Mensual</td>
+            <td>Gestantes y menores de 3 años</td>
+            <td>Agencia, agencia móvil</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- RF-5.2: Consulta simulada de fecha de pago por DNI -->
+  <section id="fecha-pago" class="fecha-pago" aria-labelledby="fecha-titulo">
+    <div class="fecha-pago-texto" data-revelar>
+      <p class="seccion-etiqueta">RF-5.2 · Consulta en línea</p>
+      <h2 id="fecha-titulo">Consulta tu fecha de pago</h2>
+      <p>
+        Ingresa tu DNI y te mostramos el día que te corresponde cobrar según el último dígito
+        de tu documento, para que te organices y evites colas innecesarias.
+      </p>
+      <p class="nota-simulacion">Consulta simulada con fines académicos.</p>
+    </div>
+
+    <form id="form-fecha-pago" class="tarjeta-formulario" novalidate data-revelar>
+      <div class="campo">
+        <label for="fp-dni">Número de DNI</label>
+        <input type="text" id="fp-dni" name="dni" inputmode="numeric" maxlength="8" placeholder="8 dígitos"
+               pattern="[0-9]{8}" required autocomplete="off" aria-describedby="fp-error">
+      </div>
+      <fieldset class="campo-opciones">
+        <legend>¿Qué pago quieres consultar?</legend>
+        <label><input type="radio" name="tipo" value="sueldo" checked> Sueldo del sector público</label>
+        <label><input type="radio" name="tipo" value="programa"> Programa social</label>
+      </fieldset>
+      <p id="fp-error" class="error" aria-live="polite"></p>
+      <button type="submit" class="boton boton-primario boton-consulta">Consultar fecha de pago</button>
+      <div id="fp-confirmacion" class="zona-confirmacion" hidden></div>
+      <dl id="fp-resultado" class="bloque-resultado" hidden></dl>
+    </form>
+  </section>
+
+  <!-- Trámites -->
+  <section id="servicios" class="servicios" aria-labelledby="servicios-titulo">
+    <header class="seccion-cabecera" data-revelar>
+      <h2 id="servicios-titulo">Trámites disponibles</h2>
+      <p class="seccion-intro">
+        Cada trámite tiene un código de procedimiento (TUPA) visible en la constancia que se entrega
+        al finalizar la atención.
+      </p>
+    </header>
+    <ul class="lista-tramites">
+      <li class="tramite" data-revelar>
+        <svg class="tramite-icono" aria-hidden="true"><use href="#icono-sueldo"></use></svg>
+        <span class="tramite-codigo">T-101</span>
+        <h3>Pago de sueldos del sector público</h3>
+        <p>Acreditación y cobro de haberes de planillas de entidades estatales adscritas a BPS.</p>
+      </li>
+      <li class="tramite" data-revelar>
+        <svg class="tramite-icono" aria-hidden="true"><use href="#icono-programa"></use></svg>
+        <span class="tramite-codigo">T-114</span>
+        <h3>Desembolso de programas sociales</h3>
+        <p>Cobro de bonos y subsidios del Estado en ventanilla o cajero, sin costo de mantenimiento.</p>
+      </li>
+      <li class="tramite" data-revelar>
+        <svg class="tramite-icono" aria-hidden="true"><use href="#icono-cita"></use></svg>
+        <span class="tramite-codigo">T-208</span>
+        <h3>Giro nacional</h3>
+        <p>Envía dinero a cualquier agencia del país. Comisión de 1.5 % del giro, mínimo S/ 5.00.</p>
+      </li>
+      <li class="tramite" data-revelar>
+        <svg class="tramite-icono" aria-hidden="true"><use href="#icono-reclamo"></use></svg>
+        <span class="tramite-codigo">T-330</span>
+        <h3>Reclamos y seguimiento</h3>
+        <p>Registro de incidencias sobre pagos no acreditados, cobros indebidos o atención en agencia.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Red de agencias: conteo y aparición progresiva -->
+  <section id="agencias" class="agencias" aria-labelledby="agencias-titulo">
+    <div class="agencias-cabecera">
+      <div>
+        <p class="seccion-etiqueta">Red de atención</p>
+        <h2 id="agencias-titulo">Red de agencias por región</h2>
+        <p class="seccion-intro">Ubica la agencia más cercana y evita colas: hay una BPS en cada provincia del país.</p>
+      </div>
+      <p class="agencias-total"><span class="agencias-numero" data-contar="1850">1,850</span> agencias</p>
+    </div>
+
+    <ul class="lista-regiones" id="lista-regiones">
+      <li style="--i: 0; --porcentaje: 22%;">
+        <h3>Lima Metropolitana</h3>
+        <p><span class="region-numero" data-contar="412">412</span> agencias</p>
+        <span class="region-barra" aria-hidden="true"></span>
+      </li>
+      <li style="--i: 1; --porcentaje: 26%;">
+        <h3>Costa norte y sur</h3>
+        <p><span class="region-numero" data-contar="486">486</span> agencias</p>
+        <span class="region-barra" aria-hidden="true"></span>
+      </li>
+      <li style="--i: 2; --porcentaje: 36%;">
+        <h3>Sierra</h3>
+        <p><span class="region-numero" data-contar="661">661</span> agencias</p>
+        <span class="region-barra" aria-hidden="true"></span>
+      </li>
+      <li style="--i: 3; --porcentaje: 16%;">
+        <h3>Selva</h3>
+        <p><span class="region-numero" data-contar="291">291</span> agencias</p>
+        <span class="region-barra" aria-hidden="true"></span>
+      </li>
+    </ul>
+
+    <!-- Imagen adaptativa: <picture> + srcset (WebP con respaldo JPG) -->
+    <picture class="imagen-agencia">
+      <source type="image/webp"
+              srcset="img/agencia-480.webp 480w, img/agencia-800.webp 800w, img/agencia-1200.webp 1200w"
+              sizes="(max-width: 700px) 100vw, 1100px">
+      <img src="img/agencia-800.jpg"
+           srcset="img/agencia-480.jpg 480w, img/agencia-800.jpg 800w, img/agencia-1200.jpg 1200w"
+           sizes="(max-width: 700px) 100vw, 1100px"
+           width="1200" height="700" loading="lazy" decoding="async"
+           alt="Ilustración de una agencia del Banco Perú Solidario con la bandera del Perú y personas haciendo fila al amanecer, con los Andes de fondo.">
+    </picture>
+  </section>
+
+  <!-- Bloque figure + figcaption -->
+  <section class="cobertura" aria-labelledby="cobertura-titulo">
+    <figure class="figura-movil" data-revelar>
+      <img src="img/agencia-movil-800.jpg"
+           srcset="img/agencia-movil-480.jpg 480w, img/agencia-movil-800.jpg 800w, img/agencia-movil-1200.jpg 1200w"
+           sizes="(max-width: 800px) 100vw, 560px"
+           width="1200" height="800" loading="lazy" decoding="async"
+           alt="Agencia móvil BPS en una comunidad altoandina: una beneficiaria con su hijo cobra su subsidio en la ventanilla del vehículo.">
+      <figcaption>
+        Agencia móvil BPS en una comunidad altoandina: llevamos el pago de programas sociales
+        a los centros poblados que están a más de dos horas de una agencia.
+      </figcaption>
+    </figure>
+    <div class="cobertura-texto" data-revelar>
+      <h2 id="cobertura-titulo">Llegamos donde otros no llegan</h2>
+      <p>
+        Nuestras agencias móviles recorren cada mes las comunidades de la sierra y la selva
+        para que ningún beneficiario se quede sin cobrar.
+      </p>
+      <ul class="lista-ventajas">
+        <li>Atención en quechua, aimara y asháninka.</li>
+        <li>Cobro sin costo de mantenimiento.</li>
+        <li>Giros nacionales a cualquier agencia del país.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contacto" class="site-footer">
+  <div class="footer-columna">
+    <h2>Atención al público</h2>
+    <p>Central telefónica: 0800-1-1010 (gratuita, las 24 horas)</p>
+    <p>Sede central: Jr. Lampa 499, Cercado de Lima</p>
+  </div>
+  <div class="footer-columna">
+    <h2>Accesos</h2>
+    <p><a href="login.html">Iniciar sesión o crear cuenta</a></p>
+    <p><a href="registro.html">Inscripción a programa social</a></p>
+  </div>
+  <p class="footer-legal">
+    Banco Perú Solidario es una entidad ficticia creada con fines académicos · Diseño Web 2026.
+  </p>
+</footer>
+
+<script type="module" src="js/index/index.js"></script>
+</body>
+</html>

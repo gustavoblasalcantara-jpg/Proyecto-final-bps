@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco Perú Solidario — Acceso de usuarios</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="marca" href="index.html" aria-label="Banco Perú Solidario, ir al inicio">
+      <span class="logo-moneda" aria-hidden="true">
+        <svg class="icono-moneda" viewBox="0 0 48 48">
+          <circle class="moneda-borde" cx="24" cy="24" r="22"></circle>
+          <circle class="moneda-cara" cx="24" cy="24" r="17"></circle>
+          <text class="moneda-simbolo" x="24" y="30.5" text-anchor="middle">S/</text>
+        </svg>
+      </span>
+      <span class="marca-texto">
+        <span class="marca-nombre">Banco Perú Solidario</span>
+        <span class="marca-lema">Módulo de autenticación</span>
+      </span>
+    </a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">← Volver al inicio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="acceso">
+
+    <!-- Panel institucional con imagen adaptativa -->
+    <section class="acceso-marca" aria-labelledby="acceso-titulo">
+      <p class="seccion-etiqueta">Banca en línea BPS</p>
+      <h1 id="acceso-titulo">Tu pago, tu inscripción y tus giros en un solo lugar</h1>
+      <p>Inscríbete a un programa social, calcula la comisión de tu giro y págala con tarjeta o billetera sin hacer cola.</p>
+      <picture class="acceso-imagen">
+        <source type="image/webp" srcset="img/agencia-480.webp 480w, img/agencia-800.webp 800w" sizes="(max-width: 900px) 90vw, 480px">
+        <img src="img/agencia-480.jpg" srcset="img/agencia-480.jpg 480w, img/agencia-800.jpg 800w" sizes="(max-width: 900px) 90vw, 480px"
+             width="480" height="280" alt="Ilustración de la fachada de una agencia del Banco Perú Solidario.">
+      </picture>
+    </section>
+
+    <!-- Tarjeta 3D que gira entre "Iniciar sesión" y "Crear cuenta" -->
+    <section class="acceso-formularios" aria-label="Formularios de acceso">
+      <div class="pestanas" role="tablist" aria-label="Elige una opción">
+        <button type="button" role="tab" id="tab-login" aria-selected="true" aria-controls="cara-login" class="pestana activa">Iniciar sesión</button>
+        <button type="button" role="tab" id="tab-registro" aria-selected="false" aria-controls="cara-registro" class="pestana">Crear cuenta</button>
+      </div>
+
+      <div class="volteo" id="volteo">
+        <div class="volteo-interior">
+
+          <!-- Cara frontal: iniciar sesión -->
+          <section class="cara cara-frente tarjeta-formulario" id="cara-login" role="tabpanel" aria-labelledby="tab-login">
+            <h2>Iniciar sesión</h2>
+            <form id="form-login" class="formulario" novalidate>
+              <div class="campo">
+                <label for="login-correo">Correo electrónico</label>
+                <input type="email" id="login-correo" name="correo" required placeholder="correo@ejemplo.com" autocomplete="email">
+              </div>
+              <div class="campo">
+                <label for="login-password">Contraseña</label>
+                <input type="password" id="login-password" name="contrasena" required placeholder="••••••••" autocomplete="current-password">
+              </div>
+              <button type="submit" id="btn-login" class="boton boton-primario boton-ancho">Ingresar</button>
+              <div id="mensaje-login" class="zona-confirmacion" aria-live="polite" hidden></div>
+            </form>
+            <details class="cuentas-prueba">
+              <summary>Cuentas de prueba para la sustentación</summary>
+              <ul>
+                <li><strong>Cliente:</strong> cliente1@correo.com · 1234</li>
+                <li><strong>Administrador:</strong> admin@correo.com · 1234</li>
+                <li><strong>Empleado:</strong> empleado1@correo.com · 1234</li>
+                <li><strong>Cajero:</strong> caja@correo.com · 1234</li>
+              </ul>
+            </details>
+          </section>
+
+          <!-- Cara posterior: crear cuenta -->
+          <section class="cara cara-reverso tarjeta-formulario" id="cara-registro" role="tabpanel" aria-labelledby="tab-registro" inert>
+            <h2>Crear cuenta de beneficiario</h2>
+            <form id="form-registro" class="formulario" novalidate>
+              <div class="campo">
+                <label for="reg-nombre">Nombre completo</label>
+                <input type="text" id="reg-nombre" name="nombre" required minlength="3" placeholder="Ej.: Juana Quispe Mamani" autocomplete="name">
+              </div>
+              <div class="campo-doble">
+                <div class="campo">
+                  <label for="reg-dni">DNI</label>
+                  <input type="text" id="reg-dni" name="dni" required pattern="[0-9]{8}" maxlength="8" inputmode="numeric" placeholder="8 dígitos">
+                </div>
+                <div class="campo">
+                  <label for="reg-password">Contraseña</label>
+                  <input type="password" id="reg-password" name="contrasena" required minlength="4" placeholder="Mín. 4 caracteres" autocomplete="new-password">
+                </div>
+              </div>
+              <div class="campo">
+                <label for="reg-correo">Correo electrónico</label>
+                <input type="email" id="reg-correo" name="correo" required placeholder="correo@ejemplo.com" autocomplete="email">
+              </div>
+              <button type="submit" id="btn-registro" class="boton boton-oro boton-ancho">Crear mi cuenta</button>
+              <div id="mensaje-registro" class="zona-confirmacion" aria-live="polite" hidden></div>
+            </form>
+          </section>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <p class="pie-simple">Banco Perú Solidario es una entidad ficticia creada con fines académicos.</p>
+
+  <script type="module" src="js/auth/login.js"></script>
+</body>
+</html>
